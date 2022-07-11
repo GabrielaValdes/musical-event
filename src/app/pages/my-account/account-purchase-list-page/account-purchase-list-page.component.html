@@ -1,0 +1,75 @@
+<div>
+    <h2>Compras</h2>
+    <div class="content" backgroundColor="primary">
+        <mat-card class="container__card custom-card flex-column">
+            <div class="list flex-column">
+                <mat-form-field appearance="outline">
+                    <mat-label>Buscar...</mat-label>
+                    <input matInput   matInput (keyup)="applyFilter($event)" #input />
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="operationNumber">
+                            <th mat-header-cell *matHeaderCellDef>Nro. transacción</th>
+                            <td mat-cell *matCellDef="let element">{{ element.operationNumber }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="title">
+                            <th mat-header-cell *matHeaderCellDef>Evento</th>
+                            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef  style="text-align: center;">Nro. entradas</th>
+                            <td mat-cell *matCellDef="let element" style="text-align: center;">{{ element.quantity }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="totalSale">
+                            <th mat-header-cell *matHeaderCellDef>Pago</th>
+                            <td mat-cell *matCellDef="let element">{{ element.totalSale | currency: 'BS ':'symbol':'.2-2' }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="saleDate">
+                            <th mat-header-cell *matHeaderCellDef>Fecha de compra</th>
+                            <td mat-cell *matCellDef="let element" style="text-align: left;">{{ element.saleDate| date: 'dd/MM/yyyy'}} {{ element.saleTime}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dateEvent">
+                            <th mat-header-cell *matHeaderCellDef>Fecha de evento</th>
+                            <td mat-cell *matCellDef="let element" style="text-align: left;">{{ element.dateEvent | date: 'dd/MM/yyyy'}} {{element.timeEvent}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ticket">
+                            <th mat-header-cell *matHeaderCellDef>TICKET</th>
+                            <td mat-cell *matCellDef="let element">
+                                <button mat-icon-button class="icon-button">
+                                   <img  class="icon" src="{{ 'assets/images/card-menus/buys.png'}} "/>
+                                    
+                                </button>
+                            </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+                        </tr>
+                    </table>
+                    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons> </mat-paginator> -->
+                    <mat-paginator
+                        #paginator
+                        [pageSizeOptions]="pageSizeOptions"
+                        (page)="getPaginatorData()"
+                        aria-label="Select page"
+                    >
+                    </mat-paginator>
+                </div>
+            </div>
+        </mat-card>
+      
+    </div>
+</div>
